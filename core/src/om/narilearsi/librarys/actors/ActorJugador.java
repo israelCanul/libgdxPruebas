@@ -20,6 +20,9 @@ import static om.narilearsi.librarys.ConfigGame.IMPULSE_JUMP;
 import static om.narilearsi.librarys.ConfigGame.INITSPEED;
 import static om.narilearsi.librarys.ConfigGame.JUMP;
 import static om.narilearsi.librarys.ConfigGame.METRICSCENEBOX2D;
+import static om.narilearsi.librarys.ConfigGame.QUIET;
+import static om.narilearsi.librarys.ConfigGame.WALKD;
+import static om.narilearsi.librarys.ConfigGame.WALKI;
 import static om.narilearsi.librarys.ConfigGame.convertir;
 
 /**
@@ -32,31 +35,23 @@ public class ActorJugador extends Entity {
     public Fixture fixture;
     private TextureRegion regionPlayer;
     private Float PLAYER_SPEED = INITSPEED;
+    public boolean collitionOn = false;
 
     public ActorJugador(Texture texture,World world){
         super(texture,world);
-        //setWidth(16);
-        //setHeight(32);
-
         // se crea el body del player  y se le agrega el shape
        body = world.createBody(createBody(BodyDef.BodyType.DynamicBody));
         body.setFixedRotation(true);// esto evita que los cuerpos giren
-
-       //funcion para crear el shape del player
         createShape(body);
     }
     public ActorJugador(Texture texture,World world,int x, int y){
         super(texture,world);
         setX(x);
         setY(y);
-        //setWidth(16);
-        //setHeight(32);
-        // se crea el body del player  y se le agrega el shape
+        setWidth(16);
+        setHeight(32);
         body = world.createBody(createBody(BodyDef.BodyType.DynamicBody));
-        body.setMassData(new MassData());
-        //body.setFixedRotation(true);
-        //body.setGravityScale(0.4f);
-        //funcion para crear el shape del player
+        body.setFixedRotation(true);// esto evita que los cuerpos giren
         createShape(body);
     }
     public void createShape(Body body){
@@ -67,6 +62,7 @@ public class ActorJugador extends Entity {
         shape.setAsBox((getWidth() / METRICSCENEBOX2D)/2,(getHeight() / METRICSCENEBOX2D)/2);
         FixtureDef def = new FixtureDef();
         def.shape = shape;
+        def.friction= 0.4f;
 
         //def.density = 10.0f;
 
@@ -84,18 +80,41 @@ public class ActorJugador extends Entity {
 
     @Override
     public void act(float delta) {
-        if (state==JUMP && !isJumping) {
+
+        if(getVelocity(1,2)==1  && !isJumping){
+            //System.out.println("Avanza a la derecha");
+            body.setLinearVelocity(INITSPEED,body.getLinearVelocity().y);
+        }else if(getVelocity(1,0)==1 && !isJumping){
+            //System.out.println("Avanza a la izquierda");
+            body.setLinearVelocity(-INITSPEED,body.getLinearVelocity().y);
+        }else {
+            if (!isJumping) body.setLinearVelocity(0, body.getLinearVelocity().y);
+        }
+
+        if (!isJumping && isMustJump() ) {
+            //System.out.println("debe brincar");
             jump();
         }
+        System.out.println(body.getLinearVelocity().y);
         if(isJump()){
             body.applyForceToCenter(0, -IMPULSE_JUMP * 1.15f,true);
         }
+        if(body.getLinearVelocity().y !=0 ){
+            setJumped(true);
+        }else {
+            setJumped(false);
+        }
+
+
 
     }
     public void jump(){
         Vector2 position=body.getPosition();
-        body.applyLinearImpulse(0, IMPULSE_JUMP, position.x, position.y, true);
+        float fuerzax = body.getLinearVelocity().x;
+        body.setLinearVelocity(0,0);
+        body.applyLinearImpulse(fuerzax,IMPULSE_JUMP, position.x, position.y, true);
         setJumped(true);
+        setVelocity(0,1,0);
     }
 }
 

@@ -44,6 +44,8 @@ public class ContactListeners implements ContactListener {
                 (userDataA.equals(userB) && userDataB.equals(userA));
     }
 
+
+
     /**
      * This method is executed when a contact has started: when two fixtures just collided.
      */
@@ -54,7 +56,8 @@ public class ContactListeners implements ContactListener {
             screen.player.setJumped(false);
         }
         if (areCollided(contact, DATAPLAYER, BLOQUE)) {
-
+            screen.player.setColicion(true);
+            //screen.player.setJumped(false);
         }
         // The player has collided with something that hurts.
         if (areCollided(contact, DATAPLAYER, ENEMY)) {
@@ -69,10 +72,10 @@ public class ContactListeners implements ContactListener {
     public void endContact(Contact contact) {
         // The player is jumping and it is not touchinghhd the floor.
         if (areCollided(contact, DATAPLAYER, SUELO)) {
-
+            //screen.player.setColicion(false);
         }
         if (areCollided(contact, DATAPLAYER, BLOQUE)) {
-
+            screen.player.setColicion(false);
         }
     }
 

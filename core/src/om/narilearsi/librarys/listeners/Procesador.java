@@ -30,10 +30,26 @@ public class Procesador extends InputAdapter{
     public boolean keyDown(int keycode) {
         System.out.println(keycode);
         switch (keycode){
-            case 29:game.player.setState(WALKI);;break;
-            case 32: game.player.setState(WALKD); ;break;
-            case 51: game.player.setState(JUMP);;break;
-            case 47: game.player.setState(DOWN);;break;
+            case 29:
+                game.player.setVelocity(1,0,1);
+                ;break;
+            case 32:
+                game.player.setVelocity(1,2,1);
+                ;break;
+            case 51:
+                /*if(game.player.getVelocity(1,2)==1){
+
+                }else if(game.player.getVelocity(1,0)==1){
+                    game.player.setVelocity(0,1,1);
+                }else{
+                    game.player.setVelocity(0,1,1);
+                }*/
+                if(!game.player.isJumping) game.player.setVelocity(0,1,1);
+
+                ;break;
+            case 47:
+
+                ;break;
             case 131: ;break;
         }
         return true;
@@ -42,10 +58,16 @@ public class Procesador extends InputAdapter{
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode){
-            case 29: if(game.player.state == WALKI) game.player.setState(QUIET);;break;
-            case 32: if(game.player.state == WALKD) game.player.setState(QUIET);;break;
-            case 51: if(game.player.state == JUMP) game.player.setState(QUIET);;break;
-            case 47: if(game.player.state == DOWN) game.player.setState(QUIET);;break;
+            case 29:
+                game.player.setVelocity(1,0,0);
+                ;break;
+            case 32:
+                game.player.setVelocity(1,2,0);
+                ;break;
+            case 51: ;break;
+            case 47:
+
+                ;break;
             case 131: ;break;
         }
         return true;

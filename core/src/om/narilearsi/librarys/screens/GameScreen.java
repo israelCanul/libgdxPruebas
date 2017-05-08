@@ -71,7 +71,8 @@ public class GameScreen extends BaseScreen {
         player =new ActorJugador(textureJugador,world,0,32);
         batch = new SpriteBatch();
         suelo.add(new GroundBase(terrains,world,0,0,700,16));
-        suelo.add(new GroundBase(terrains,world,300,90,160,16,BLOQUE));
+        suelo.add(new GroundBase(terrains,world,300,60,80,16,BLOQUE));
+        suelo.add(new GroundBase(terrains,world,400,90,80,16,BLOQUE));
         //suelo = new GroundBase(terrains,world,0,0,700,16);// se crea el suelo de la aplicacion
         stage.addActor(player);
     }
@@ -99,8 +100,11 @@ public class GameScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act();
+
         world.step(1 / 60f, 6, 2);
+        stage.act();
+
+
         camera.update();
         debugRenderer.render(world,camera.combined);
         stage.draw();

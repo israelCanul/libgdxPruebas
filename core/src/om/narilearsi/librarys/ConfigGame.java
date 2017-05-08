@@ -18,7 +18,7 @@ public class ConfigGame {
     public static final String BLOQUE = "BLOQUE";
     public static final String ENEMY = "ENENY";
     public static final String GOAL = "GOAL";
-    public static final float INITSPEED = 4f;
+    public static final float INITSPEED = 8f;
     public static final int IMPULSE_JUMP = 16;
 
     //funciones reutilisables
