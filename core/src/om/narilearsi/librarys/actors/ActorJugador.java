@@ -36,6 +36,7 @@ public class ActorJugador extends Entity {
     private TextureRegion regionPlayer;
     private Float PLAYER_SPEED = INITSPEED;
     public boolean collitionOn = false;
+    public float lastPointY = 0;
 
     public ActorJugador(Texture texture,World world){
         super(texture,world);
@@ -95,16 +96,18 @@ public class ActorJugador extends Entity {
             //System.out.println("debe brincar");
             jump();
         }
-        System.out.println(body.getLinearVelocity().y);
+        //System.out.println(body.getLinearVelocity().y);
+
         if(isJump()){
             body.applyForceToCenter(0, -IMPULSE_JUMP * 1.15f,true);
         }
-        if(body.getLinearVelocity().y !=0 ){
+        if(body.getLinearVelocity().y !=0 && lastPointY!=0.0){
             setJumped(true);
         }else {
             setJumped(false);
         }
 
+        lastPointY = body.getLinearVelocity().y;
 
 
     }

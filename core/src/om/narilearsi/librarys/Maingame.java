@@ -1,6 +1,6 @@
 package om.narilearsi.librarys;
 
-;
+
 import com.badlogic.gdx.Game;
 
 import om.narilearsi.librarys.screens.GameScreen;

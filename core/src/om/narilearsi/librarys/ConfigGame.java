@@ -25,4 +25,11 @@ public class ConfigGame {
     public static float convertir(Float valor){
         return METRICSCENEBOX2D * valor;
     }
+
+    public static Double getAngle(float Ancho, float Alto){
+        double angleB = Math.atan(Alto/Ancho);
+        double anglec =angleB * (180/Math.PI);
+        return anglec;
+    }
+
 }
