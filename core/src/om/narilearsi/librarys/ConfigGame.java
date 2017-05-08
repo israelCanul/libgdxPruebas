@@ -31,5 +31,12 @@ public class ConfigGame {
         double anglec =angleB * (180/Math.PI);
         return anglec;
     }
+    public static double radiansToDegree(float radians){
+       return  radians*(180/Math.PI);
+    }
+    public static float degreeToRadians(float degree){
+        float degToRad = (float) ( Math.PI/180);
+        return  degree * degToRad;
+    }
 
 }

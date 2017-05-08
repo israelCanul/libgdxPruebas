@@ -22,7 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-
+import com.sun.javafx.binding.DoubleConstant;
 
 
 import om.narilearsi.librarys.BaseScreen;
@@ -37,7 +37,9 @@ import static om.narilearsi.librarys.ConfigGame.BLOQUE;
 import static om.narilearsi.librarys.ConfigGame.HEIGHTSCREEN;
 import static om.narilearsi.librarys.ConfigGame.METRICSCENEBOX2D;
 import static om.narilearsi.librarys.ConfigGame.WIDTHSCREEN;
+import static om.narilearsi.librarys.ConfigGame.degreeToRadians;
 import static om.narilearsi.librarys.ConfigGame.getAngle;
+import static om.narilearsi.librarys.ConfigGame.radiansToDegree;
 
 /**
  * Created by viane on 29/04/2017.
@@ -52,9 +54,9 @@ public class GameScreen extends BaseScreen {
     World world;
     public Procesador procesador;
 
-boolean flag = true;
+
     public Body b;
-    float degToRad,radials;
+
 
     // for debug
     private Box2DDebugRenderer debugRenderer;
@@ -128,30 +130,27 @@ boolean flag = true;
         fixtureDef1.shape = ground2;
         fixtureDef1.restitution = 0f;
 
-//        Body a =  world.createBody(bodyDef);
-//        a.createFixture(fixtureDef);
-//        b = world.createBody(bodyDef1);
-//        b.createFixture(fixtureDef1);
+        Body a =  world.createBody(bodyDef);
+        a.createFixture(fixtureDef);
+        b = world.createBody(bodyDef1);
+        b.createFixture(fixtureDef1);
+
+        // distance between
+        RopeJointDef distanceJointDef = new RopeJointDef();
+        distanceJointDef.bodyA = a;
+        distanceJointDef.bodyB = b;
+        distanceJointDef.maxLength = 0f;
+        distanceJointDef.localAnchorA.set(0,0);
+        distanceJointDef.localAnchorB.set(0f,1f);
+
+
+        world.createJoint(distanceJointDef);
+
+
 //
-//        // distance between
-//        RopeJointDef distanceJointDef = new RopeJointDef();
-//        distanceJointDef.bodyA = a;
-//        distanceJointDef.bodyB = b;
-//        distanceJointDef.maxLength = 0f;
-//        distanceJointDef.localAnchorA.set(0,0);
-//        distanceJointDef.localAnchorB.set(0f,1f);
 //
-//
-//        world.createJoint(distanceJointDef);
-
-
-        degToRad = (float) ( Math.PI/180);
-
-        radials = (float) (40* degToRad);
-
-
-        double aaaa= getAngle(17, 10);
-        System.out.println(aaaa);
+//        double aaaa= getAngle(17, 10);
+//        System.out.println(aaaa);
         ground.dispose();
     }
 
@@ -179,14 +178,9 @@ boolean flag = true;
     public void render(float delta) {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // None of the following options work.
-//        if(flag){
-//            radials = (float) (0* degToRad);
-//            flag = false;
-//        }else{
-//            flag = true;
-//            radials = (float) (90* degToRad);
-//        }
-        //b.setTransform(b.getWorldCenter(), radials);
+
+        b.setTransform(b.getWorldCenter(), degreeToRadians(90) );
+        System.out.println(radiansToDegree(b.getAngle()));
 
         world.step(1 / 60f, 6, 2);
         stage.act();
