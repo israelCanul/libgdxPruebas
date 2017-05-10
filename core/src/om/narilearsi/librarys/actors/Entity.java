@@ -77,14 +77,13 @@ public class Entity extends Actor {
             }
         }
     }
+
     public BodyDef createBody(BodyDef.BodyType type){
         BodyDef def = new BodyDef();
         def.position.set((getX()/ METRICSCENEBOX2D)+(getWidth() / METRICSCENEBOX2D)/2,(getY()/ METRICSCENEBOX2D) + (getHeight() / METRICSCENEBOX2D)/2);
-
         def.type = type;
         return def;
     }
-
 
     public void dispose(){
         if(body!=null){
@@ -93,9 +92,7 @@ public class Entity extends Actor {
         }
     }
 
-
     // getter and setters
-
     public float getWidthBox2D(){
         return (getWidth() / METRICSCENEBOX2D)/2;
     }
@@ -127,4 +124,6 @@ public class Entity extends Actor {
     public void setColicion(Boolean coli){
         colicion = coli;
     }
+
+
 }

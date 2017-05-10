@@ -28,7 +28,7 @@ public class Procesador extends InputAdapter{
 
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println(keycode);
+        //System.out.println(keycode);
         switch (keycode){
             case 29:
                 game.player.setVelocity(1,0,1);

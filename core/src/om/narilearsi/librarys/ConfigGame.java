@@ -18,11 +18,34 @@ public class ConfigGame {
     public static final String BLOQUE = "BLOQUE";
     public static final String ENEMY = "ENENY";
     public static final String GOAL = "GOAL";
-    public static final float INITSPEED = 8f;
-    public static final int IMPULSE_JUMP = 16;
+    public static final float INITSPEED = 9f;
+    public static final float IMPULSE_JUMP = 16f;
 
     //funciones reutilisables
     public static float convertir(Float valor){
         return METRICSCENEBOX2D * valor;
+    }
+
+
+    public static class DataPLayer{
+        private float width, heigth;
+        private String name;
+
+        public DataPLayer(float width,float heigth,String name){
+            this.width = width;
+            this.heigth = heigth;
+            this.name = name;
+        }
+        public String getName() {
+            return name;
+        }
+
+        public float getHeigth() {
+            return heigth;
+        }
+
+        public float getWidth() {
+            return width;
+        }
     }
 }

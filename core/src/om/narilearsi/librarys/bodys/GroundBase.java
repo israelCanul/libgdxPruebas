@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 
+import om.narilearsi.librarys.ConfigGame;
 
 import static om.narilearsi.librarys.ConfigGame.METRICSCENEBOX2D;
 import static om.narilearsi.librarys.ConfigGame.SUELO;
@@ -36,7 +37,7 @@ public class GroundBase extends BlockBase {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox((getWidth() / METRICSCENEBOX2D) / 2, (getHeight() / METRICSCENEBOX2D) / 2);
         fixture = body.createFixture(shape, 1);
-        fixture.setUserData(SUELO);
+        fixture.setUserData(new ConfigGame.DataPLayer(getWidthBox2D(),getHeightBox2D(),SUELO));
         shape.dispose();
     }
     public void createShape(Body body, String data) {
@@ -46,7 +47,8 @@ public class GroundBase extends BlockBase {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox((getWidth() / METRICSCENEBOX2D) / 2, (getHeight() / METRICSCENEBOX2D) / 2);
         fixture = body.createFixture(shape, 1);
-        fixture.setUserData(data);
+        //fixture.setUserData(data);
+        fixture.setUserData(new ConfigGame.DataPLayer(getWidthBox2D(),getHeightBox2D(),data));
         shape.dispose();
     }
     @Override

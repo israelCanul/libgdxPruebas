@@ -104,7 +104,6 @@ public class GameScreen extends BaseScreen {
         world.step(1 / 60f, 6, 2);
         stage.act();
 
-
         camera.update();
         debugRenderer.render(world,camera.combined);
         stage.draw();
