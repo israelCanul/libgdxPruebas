@@ -2,17 +2,14 @@ package om.narilearsi.librarys.listeners;
 
 
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
 
-import om.narilearsi.librarys.Maingame;
 import om.narilearsi.librarys.screens.GameScreen;
 
-import static om.narilearsi.librarys.ConfigGame.DOWN;
-import static om.narilearsi.librarys.ConfigGame.JUMP;
-import static om.narilearsi.librarys.ConfigGame.QUIET;
+import static om.narilearsi.librarys.ConfigGame.QUIETD;
+import static om.narilearsi.librarys.ConfigGame.QUIETI;
 import static om.narilearsi.librarys.ConfigGame.WALKD;
 import static om.narilearsi.librarys.ConfigGame.WALKI;
+
 
 /**
  * Created by viane on 24/04/2017.
@@ -32,9 +29,11 @@ public class Procesador extends InputAdapter{
         switch (keycode){
             case 29:
                 game.player.setVelocity(1,0,1);
+                game.player.setState(WALKI);
                 ;break;
             case 32:
                 game.player.setVelocity(1,2,1);
+                game.player.setState(WALKD);
                 ;break;
             case 51:
                 /*if(game.player.getVelocity(1,2)==1){
@@ -60,9 +59,11 @@ public class Procesador extends InputAdapter{
         switch (keycode){
             case 29:
                 game.player.setVelocity(1,0,0);
+                if(game.player.state==WALKI) game.player.setState(QUIETI);
                 ;break;
             case 32:
                 game.player.setVelocity(1,2,0);
+                if(game.player.state==WALKD) game.player.setState(QUIETD);
                 ;break;
             case 51: ;break;
             case 47:

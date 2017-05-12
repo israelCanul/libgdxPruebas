@@ -56,6 +56,7 @@ public class Entity extends Actor {
     public boolean isColitioned(){ return colicion;}
     public void setJumped(Boolean jump){
         isJumping = jump;
+
     }
 
     public void setState(int state){

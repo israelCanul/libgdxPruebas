@@ -50,7 +50,7 @@ public class GameScreen extends BaseScreen {
     public GameScreen(Maingame game) {
         super(game);
 
-        textureJugador = new Texture("correrSprite.png");
+        textureJugador = new Texture("soldier1.png");
         terrains = new Texture("ground.png");
         world = new World(new Vector2(0, -10f), false);
         stage = new Stage(new FitViewport(WIDTHSCREEN, HEIGHTSCREEN));
@@ -105,7 +105,7 @@ public class GameScreen extends BaseScreen {
         stage.act();
 
         camera.update();
-        debugRenderer.render(world,camera.combined);
+        //debugRenderer.render(world,camera.combined);
         stage.draw();
         batch.begin();
         for (int i = 0; i < suelo.size; i++) {

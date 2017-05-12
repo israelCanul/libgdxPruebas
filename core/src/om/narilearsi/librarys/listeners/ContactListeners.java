@@ -12,10 +12,9 @@ import om.narilearsi.librarys.screens.GameScreen;
 
 import static om.narilearsi.librarys.ConfigGame.BLOQUE;
 import static om.narilearsi.librarys.ConfigGame.DATAPLAYER;
-import static om.narilearsi.librarys.ConfigGame.DOWN;
+
 import static om.narilearsi.librarys.ConfigGame.ENEMY;
-import static om.narilearsi.librarys.ConfigGame.JUMP;
-import static om.narilearsi.librarys.ConfigGame.QUIET;
+
 import static om.narilearsi.librarys.ConfigGame.SUELO;
 
 
@@ -76,6 +75,7 @@ public class ContactListeners implements ContactListener {
         // The player has collided with the floor.
         if (areCollided(contact, DATAPLAYER, SUELO)) {
             screen.player.setJumped(false);
+
             screen.player.setOverFloor(true);
         }
         if (areCollided(contact, DATAPLAYER, BLOQUE)) {

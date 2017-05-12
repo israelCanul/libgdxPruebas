@@ -8,11 +8,12 @@ public class ConfigGame {
     public static final Float METRICSCENEBOX2D = 16f;
     public static final int WIDTHSCREEN = 640;
     public static final int HEIGHTSCREEN = 480;
-    public static final int DOWN=5;
-    public static final int JUMP=4;
-    public static final int WALKD=3;
-    public static final int WALKI=2;
-    public static final int QUIET=1;
+    public static final int DOWN=6;
+    public static final int JUMP=5;
+    public static final int WALKD=4;
+    public static final int WALKI=3;
+    public static final int QUIETI=2;
+    public static final int QUIETD=1;
     public static final String DATAPLAYER = "PLAYER";
     public static final String SUELO = "SUELO";
     public static final String BLOQUE = "BLOQUE";
@@ -20,6 +21,8 @@ public class ConfigGame {
     public static final String GOAL = "GOAL";
     public static final float INITSPEED = 9f;
     public static final float IMPULSE_JUMP = 16f;
+    public static final int FRAME_COLS_PLAYER = 6;
+    public static final int FRAME_ROWS_PLAYER = 10;
 
     //funciones reutilisables
     public static float convertir(Float valor){
