@@ -13,7 +13,8 @@ import static om.narilearsi.librarys.ConfigGame.DOWN;
 import static om.narilearsi.librarys.ConfigGame.JUMP;
 import static om.narilearsi.librarys.ConfigGame.METRICSCENEBOX2D;
 
-import static om.narilearsi.librarys.ConfigGame.WALKD;
+import static om.narilearsi.librarys.ConfigGame.WALK;
+
 
 /**
  * Created by viane on 30/04/2017.
@@ -26,8 +27,10 @@ public class Entity extends Actor {
     public boolean isJumping;
     private boolean isDown;
 
-    public Integer[][] velocity = {{0,0,0},
+    public Integer[][] forcesApply = {{0,0,0},
                                    {0,1,0}};
+    public Integer[] direction = {0,1};
+
     public World world;
     public Texture imagen;
     public TextureRegion regionTexture;
@@ -63,7 +66,7 @@ public class Entity extends Actor {
         if (this.state != state){
             this.state = state;
             switch(state){
-                case WALKD:
+                case WALK:
                     //currentAnimation = walkAnimation;
                     break;
                 case JUMP:
@@ -102,7 +105,7 @@ public class Entity extends Actor {
     }
 
     public boolean isMustJump() {
-        if(getVelocity(0,1)==1) return true;
+        if(getForcesApply(0,1)==1) return true;
         else return false;
     }
 
@@ -114,12 +117,12 @@ public class Entity extends Actor {
         isDown = down;
     }
 
-    public Integer getVelocity(int a,int b) {
-        return velocity[a][b];
+    public Integer getForcesApply(int a, int b) {
+        return forcesApply[a][b];
     }
 
-    public void setVelocity(int a,int b,Integer velocity) {
-        this.velocity[a][b] = velocity;
+    public void setForcesApply(int a, int b, Integer velocity) {
+        this.forcesApply[a][b] = velocity;
     }
 
     public void setColicion(Boolean coli){

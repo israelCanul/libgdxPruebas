@@ -10,10 +10,8 @@ public class ConfigGame {
     public static final int HEIGHTSCREEN = 480;
     public static final int DOWN=6;
     public static final int JUMP=5;
-    public static final int WALKD=4;
-    public static final int WALKI=3;
-    public static final int QUIETI=2;
-    public static final int QUIETD=1;
+    public static final int WALK=3;
+    public static final int QUIET=1;
     public static final String DATAPLAYER = "PLAYER";
     public static final String SUELO = "SUELO";
     public static final String BLOQUE = "BLOQUE";

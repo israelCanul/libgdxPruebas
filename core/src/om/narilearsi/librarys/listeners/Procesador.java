@@ -5,10 +5,8 @@ import com.badlogic.gdx.InputAdapter;
 
 import om.narilearsi.librarys.screens.GameScreen;
 
-import static om.narilearsi.librarys.ConfigGame.QUIETD;
-import static om.narilearsi.librarys.ConfigGame.QUIETI;
-import static om.narilearsi.librarys.ConfigGame.WALKD;
-import static om.narilearsi.librarys.ConfigGame.WALKI;
+import static om.narilearsi.librarys.ConfigGame.JUMP;
+
 
 
 /**
@@ -28,23 +26,22 @@ public class Procesador extends InputAdapter{
         //System.out.println(keycode);
         switch (keycode){
             case 29:
-                game.player.setVelocity(1,0,1);
-                game.player.setState(WALKI);
+                game.player.setForcesApply(1,0,1);
+                game.player.setForcesApply(1,2,0);
+                game.player.direction[0] = 1;
+                game.player.direction[1] = 0;
                 ;break;
             case 32:
-                game.player.setVelocity(1,2,1);
-                game.player.setState(WALKD);
+                game.player.setForcesApply(1,2,1);
+                game.player.setForcesApply(1,0,0);
+                game.player.direction[1] = 1;
+                game.player.direction[0] = 0;
                 ;break;
             case 51:
-                /*if(game.player.getVelocity(1,2)==1){
-
-                }else if(game.player.getVelocity(1,0)==1){
-                    game.player.setVelocity(0,1,1);
-                }else{
-                    game.player.setVelocity(0,1,1);
-                }*/
-                if(!game.player.isJumping) game.player.setVelocity(0,1,1);
-
+                if(!game.player.isJumping){
+                    game.player.setForcesApply(0,1,1);
+                    game.player.setState(JUMP);
+                }
                 ;break;
             case 47:
 
@@ -58,14 +55,14 @@ public class Procesador extends InputAdapter{
     public boolean keyUp(int keycode) {
         switch (keycode){
             case 29:
-                game.player.setVelocity(1,0,0);
-                if(game.player.state==WALKI) game.player.setState(QUIETI);
+                game.player.setForcesApply(1,0,0);
                 ;break;
             case 32:
-                game.player.setVelocity(1,2,0);
-                if(game.player.state==WALKD) game.player.setState(QUIETD);
+                game.player.setForcesApply(1,2,0);
                 ;break;
-            case 51: ;break;
+            case 51:
+
+                ;break;
             case 47:
 
                 ;break;

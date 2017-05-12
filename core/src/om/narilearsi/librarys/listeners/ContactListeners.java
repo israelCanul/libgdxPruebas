@@ -75,7 +75,6 @@ public class ContactListeners implements ContactListener {
         // The player has collided with the floor.
         if (areCollided(contact, DATAPLAYER, SUELO)) {
             screen.player.setJumped(false);
-
             screen.player.setOverFloor(true);
         }
         if (areCollided(contact, DATAPLAYER, BLOQUE)) {
@@ -86,8 +85,6 @@ public class ContactListeners implements ContactListener {
                 screen.player.setJumped(false);
                 screen.player.setColicion(false);
             }
-            //System.out.println("toco suelo "+areCollidedOn(contact, DATAPLAYER, BLOQUE));
-            //screen.player.setJumped(false);
         }
         // The player has collided with something that hurts.
         if (areCollided(contact, DATAPLAYER, ENEMY)) {
@@ -102,7 +99,6 @@ public class ContactListeners implements ContactListener {
     public void endContact(Contact contact) {
         // The player is jumping and it is not touchinghhd the floor.
         if (areCollided(contact, DATAPLAYER, SUELO)) {
-            //screen.player.setColicion(false);
             screen.player.setOverFloor(false);
         }
         if (areCollided(contact, DATAPLAYER, BLOQUE)) {

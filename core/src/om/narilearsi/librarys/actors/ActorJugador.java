@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -20,7 +19,6 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import om.narilearsi.librarys.ConfigGame;
 import static om.narilearsi.librarys.ConfigGame.DATAPLAYER;
-import static om.narilearsi.librarys.ConfigGame.DOWN;
 import static om.narilearsi.librarys.ConfigGame.FRAME_COLS_PLAYER;
 import static om.narilearsi.librarys.ConfigGame.FRAME_ROWS_PLAYER;
 import static om.narilearsi.librarys.ConfigGame.IMPULSE_JUMP;
@@ -28,10 +26,8 @@ import static om.narilearsi.librarys.ConfigGame.INITSPEED;
 import static om.narilearsi.librarys.ConfigGame.JUMP;
 import static om.narilearsi.librarys.ConfigGame.METRICSCENEBOX2D;
 
-import static om.narilearsi.librarys.ConfigGame.QUIETD;
-import static om.narilearsi.librarys.ConfigGame.QUIETI;
-import static om.narilearsi.librarys.ConfigGame.WALKD;
-import static om.narilearsi.librarys.ConfigGame.WALKI;
+import static om.narilearsi.librarys.ConfigGame.QUIET;
+import static om.narilearsi.librarys.ConfigGame.WALK;
 import static om.narilearsi.librarys.ConfigGame.convertir;
 
 /**
@@ -49,7 +45,8 @@ public class ActorJugador extends Entity {
     private boolean OverFloor = false;
 
     protected Texture textureAnimacionWalk;
-    protected Animation<TextureRegion> currentAnimation,quietD,quietI,walkD, walkI,jumpD,jumpI,dieD,dieI,shootD,shootI;
+    protected Animation quietD,quietI,walkD, walkI,jumpD,jumpI,dieD,dieI,shootD,shootI;
+    protected Animation currentAnimation;
     private float time = 0;// for the animation
 
     public ActorJugador(Texture texture,World world){
@@ -61,7 +58,7 @@ public class ActorJugador extends Entity {
     }
     public ActorJugador(Texture texture,World world,int x, int y){
         super(texture,world);
-        this.state = QUIETD;
+        state = QUIET;//estado del individuo
         setX(x);
         setY(y);
         setWidth(32);
@@ -95,13 +92,22 @@ public class ActorJugador extends Entity {
 
     @Override
     public void act(float delta) {
-        if(getVelocity(1,2)==1 && !isColitioned()){
+        if(getForcesApply(1,2)==1 && !isColitioned()){
             body.setLinearVelocity(PLAYERSPEED,body.getLinearVelocity().y);
-        }else if(getVelocity(1,0)==1 && !isColitioned() ){
+            if(!isJumping){
+                setState(WALK);
+            }
+        }else if(getForcesApply(1,0)==1 && !isColitioned() ){
             body.setLinearVelocity(-PLAYERSPEED,body.getLinearVelocity().y);
+            if(!isJumping){
+                setState(WALK);
+            }
         }else {
             if(isOverFloor()){
                 body.setLinearVelocity(0, body.getLinearVelocity().y);
+                if(!isJumping){
+                    setState(QUIET);
+                }
             }
         }
         if(!isJumping &&  !isOverFloor()){
@@ -114,6 +120,9 @@ public class ActorJugador extends Entity {
             jump();
         }
         if(isJump()){
+            if(!isJumping){
+                setState(JUMP);
+            }
            body.applyForceToCenter(0, -IMPULSE_JUMP * 1.15f,true);
         }
         time+= Gdx.graphics.getDeltaTime();
@@ -121,12 +130,13 @@ public class ActorJugador extends Entity {
 
         //System.out.print(state);
 
+
     }
     public void jump(){
         Vector2 position=body.getPosition();
         body.applyLinearImpulse(0,IMPULSE_JUMP, position.x, position.y, true);
         setJumped(true);
-        setVelocity(0,1,0);
+        setForcesApply(0,1,0);
     }
     public void initializeAnimations(){
         TextureRegion[] temporal;
@@ -222,24 +232,28 @@ public class ActorJugador extends Entity {
             LastState = this.state;
             this.state = state;
             switch(state){
-                case WALKD:
-                    currentAnimation = walkD;
-                    break;
-                case WALKI:
-                    currentAnimation = walkI;
+                case WALK:
+                    if(direction[0]==1){//preguntamos si la direccion hacia donde se dirige es a la izquierda
+                        currentAnimation = walkI;
+                    }else{
+                        currentAnimation = walkD;
+                    }
+
                     break;
                 case JUMP:
-                    if(LastState==WALKD || LastState==QUIETD){
-                        currentAnimation = jumpD;
-                    }else if(LastState==WALKI || LastState==QUIETI){
+                    if(direction[0]==1){//preguntamos si la direccion hacia donde se dirige es a la izquierda
                         currentAnimation = jumpI;
+                    }else{
+                        currentAnimation = jumpD;
                     }
                     break;
-                case QUIETD:
+                case QUIET:
                     currentAnimation = quietD;
-                    break;
-                case QUIETI:
-                    currentAnimation = quietI;
+                    if(direction[0]==1){//preguntamos si la direccion hacia donde se dirige es a la izquierda
+                        currentAnimation = quietI;
+                    }else{
+                        currentAnimation = quietD;
+                    }
                     break;
                 default:
                     currentAnimation = quietD;
@@ -247,6 +261,8 @@ public class ActorJugador extends Entity {
             }
         }
     }
+
+
 
     public boolean isOverFloor() {
         return OverFloor;
