@@ -1,6 +1,7 @@
 package om.narilearsi.librarys.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -46,6 +47,7 @@ public class GameScreen extends BaseScreen {
     // for debug
     private Box2DDebugRenderer debugRenderer;
     private OrthographicCamera camera;
+    FPSLogger loger;
 
     public GameScreen(Maingame game) {
         super(game);
@@ -60,6 +62,7 @@ public class GameScreen extends BaseScreen {
 
         //se crea el render de box2d solo para debug
         debugRenderer= new Box2DDebugRenderer();
+        loger = new FPSLogger();
         //System.out.println(Gdx.graphics.getWidth() +" height : "+Gdx.graphics.getHeight());
         //se crea la camara de tile
         camera = new OrthographicCamera();
@@ -100,17 +103,18 @@ public class GameScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        world.step(1 / 60f, 6, 2);
         stage.act();
+        world.step(1 / 60f, 6, 2);
+
 
         camera.update();
-        //debugRenderer.render(world,camera.combined);
-        stage.draw();
+        debugRenderer.render(world,camera.combined);
+        //stage.draw();
         batch.begin();
         for (int i = 0; i < suelo.size; i++) {
-            suelo.get(i).draw(batch);
+            //suelo.get(i).draw(batch);
         }
         batch.end();
+        loger.log();
     }
 }

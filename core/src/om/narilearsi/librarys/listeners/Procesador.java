@@ -26,16 +26,18 @@ public class Procesador extends InputAdapter{
         //System.out.println(keycode);
         switch (keycode){
             case 29:
-                game.player.setForcesApply(1,0,1);
-                game.player.setForcesApply(1,2,0);
-                game.player.direction[0] = 1;
-                game.player.direction[1] = 0;
+                    game.player.setForcesApply(1, 2, 0);
+                    game.player.setForcesApply(1,0,1);
+                    game.player.direction[0] = 1;
+                    game.player.direction[1] = 0;
+
                 ;break;
             case 32:
-                game.player.setForcesApply(1,2,1);
-                game.player.setForcesApply(1,0,0);
-                game.player.direction[1] = 1;
-                game.player.direction[0] = 0;
+                    game.player.setForcesApply(1, 2, 1);
+                    game.player.setForcesApply(1, 0, 0);
+                    game.player.direction[1] = 1;
+                    game.player.direction[0] = 0;
+
                 ;break;
             case 51:
                 if(!game.player.isJumping){

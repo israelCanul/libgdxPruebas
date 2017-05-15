@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
+import com.badlogic.gdx.physics.box2d.ChainShape;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
@@ -46,7 +48,7 @@ public class ActorJugador extends Entity {
 
     protected Texture textureAnimacionWalk;
     protected Animation quietD,quietI,walkD, walkI,jumpD,jumpI,dieD,dieI,shootD,shootI;
-    protected Animation currentAnimation;
+    protected Animation<TextureRegion> currentAnimation;
     private float time = 0;// for the animation
 
     public ActorJugador(Texture texture,World world){
@@ -73,15 +75,36 @@ public class ActorJugador extends Entity {
         if(body==null) body = world.createBody(createBody(BodyDef.BodyType.DynamicBody));
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((getWidth() / METRICSCENEBOX2D)/2,(getHeight() / METRICSCENEBOX2D)/2);
+        shape.setAsBox(getWidthBox2D()/2,getHeightBox2D());
+
+
+        CircleShape circulo = new CircleShape();
+        //circulo.setRadius((getWidth() / METRICSCENEBOX2D)/2);
+        circulo.setRadius(getHeightBox2D());
+        //circulo.setPosition(new Vector2(0,0));
+
+
+
+        PolygonShape cuerpo = new PolygonShape();
+        cuerpo.setAsBox(getWidthBox2D(),getHeightBox2D());
+
+        //ChainShape chainShape = new ChainShape();
+        //chainShape.createChain(new Vector2[]{new Vector2(-getWidthBox2D(),0),new Vector2(-getWidthBox2D()/2,-getHeightBox2D()),new Vector2(getWidthBox2D()/2,-getHeightBox2D()),new Vector2(getWidthBox2D(),0),new Vector2(getWidthBox2D()/2,getHeightBox2D()),new Vector2(-getWidthBox2D()/2,getHeightBox2D()),new Vector2(-getWidthBox2D(),0)});
+
+        //body.createFixture(cuerpo,3);
+
         FixtureDef def = new FixtureDef();
         def.shape = shape;
-
+        def.density = 0;
         def.friction= 3f;
+
         fixture = body.createFixture(def);
+        body.createFixture(circulo,0);
         fixture.setUserData(new ConfigGame.DataPLayer(getWidthBox2D(),getHeightBox2D(),DATAPLAYER));
         shape.dispose();
     }
+
+
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -92,14 +115,19 @@ public class ActorJugador extends Entity {
 
     @Override
     public void act(float delta) {
-        if(getForcesApply(1,2)==1 && !isColitioned()){
+
+        if(getForcesApply(1,2)==1 && getForcesApply(1,0)==0 && !isColitioned()){
             body.setLinearVelocity(PLAYERSPEED,body.getLinearVelocity().y);
+
             if(!isJumping){
+                //System.out.println(direction[0] +" , "+direction[1]);
                 setState(WALK);
             }
-        }else if(getForcesApply(1,0)==1 && !isColitioned() ){
+        }else if(getForcesApply(1,0)==1 && getForcesApply(1,2)==0 && !isColitioned() ){
             body.setLinearVelocity(-PLAYERSPEED,body.getLinearVelocity().y);
+
             if(!isJumping){
+                //System.out.println(direction[0] +" , "+direction[1]);
                 setState(WALK);
             }
         }else {
@@ -111,7 +139,7 @@ public class ActorJugador extends Entity {
             }
         }
         if(!isJumping &&  !isOverFloor()){
-            System.out.println(!isJumping &&  !isOverFloor());
+            //System.out.println(!isJumping &&  !isOverFloor());
             body.setLinearVelocity(body.getLinearVelocity().x/2, body.getLinearVelocity().y);
             body.applyForceToCenter(body.getLinearVelocity().x/2, -IMPULSE_JUMP * 1.5f,true);
         }
@@ -120,22 +148,18 @@ public class ActorJugador extends Entity {
             jump();
         }
         if(isJump()){
-            if(!isJumping){
-                setState(JUMP);
-            }
            body.applyForceToCenter(0, -IMPULSE_JUMP * 1.15f,true);
         }
         time+= Gdx.graphics.getDeltaTime();
         currentFrame =  currentAnimation.getKeyFrame(time,true);
 
-        //System.out.print(state);
-
-
+        //System.out.println(body.getLinearVelocity().y);
     }
     public void jump(){
         Vector2 position=body.getPosition();
         body.applyLinearImpulse(0,IMPULSE_JUMP, position.x, position.y, true);
         setJumped(true);
+        setState(JUMP);
         setForcesApply(0,1,0);
     }
     public void initializeAnimations(){
@@ -228,17 +252,18 @@ public class ActorJugador extends Entity {
     // getter and setters
 
     public void setState(int state){
-        if (this.state != state){
+
             LastState = this.state;
             this.state = state;
             switch(state){
                 case WALK:
                     if(direction[0]==1){//preguntamos si la direccion hacia donde se dirige es a la izquierda
                         currentAnimation = walkI;
-                    }else{
-                        currentAnimation = walkD;
-                    }
 
+                    }else if(direction[1]==1){
+                        currentAnimation = walkD;
+
+                    }
                     break;
                 case JUMP:
                     if(direction[0]==1){//preguntamos si la direccion hacia donde se dirige es a la izquierda
@@ -256,10 +281,10 @@ public class ActorJugador extends Entity {
                     }
                     break;
                 default:
-                    currentAnimation = quietD;
+
                     break;
             }
-        }
+
     }
 
 

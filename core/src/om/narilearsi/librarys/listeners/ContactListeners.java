@@ -60,9 +60,9 @@ public class ContactListeners implements ContactListener {
     }
 
     public boolean checkBodies(DataPLayer player,Vector2 bodyA,DataPLayer other,Vector2 bodyB){
-//        System.out.println("BodyA :"+ (bodyA.y - player.getHeigth()));
-//        System.out.println("BodyB :"+(bodyB.y + other.getHeigth()));
-//        System.out.println(((bodyA.y - player.getHeigth()) > (bodyB.y + other.getHeigth())));
+        System.out.println("BodyA :"+ (bodyA.y - player.getHeigth()));
+        System.out.println("BodyB :"+(bodyB.y + other.getHeigth()));
+        System.out.println(((bodyA.y - player.getHeigth()) > (bodyB.y + other.getHeigth())));
         return ((bodyA.y - player.getHeigth()) < (bodyB.y + other.getHeigth()));
     }
 

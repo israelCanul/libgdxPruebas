@@ -18,7 +18,7 @@ public class ConfigGame {
     public static final String ENEMY = "ENENY";
     public static final String GOAL = "GOAL";
     public static final float INITSPEED = 9f;
-    public static final float IMPULSE_JUMP = 16f;
+    public static final float IMPULSE_JUMP = 32f;
     public static final int FRAME_COLS_PLAYER = 6;
     public static final int FRAME_ROWS_PLAYER = 10;
 
