@@ -54,7 +54,7 @@ public class ActorJugador extends Entity {
     public ActorJugador(Texture texture,World world){
         super(texture,world);
         // se crea el body del player  y se le agrega el shape
-        body = world.createBody(createBody(BodyDef.BodyType.DynamicBody));
+        body = world.createBody(createBody(BodyDef.BodyType.StaticBody));
         body.setFixedRotation(true);// esto evita que los cuerpos giren
         createShape(body);
     }
@@ -69,6 +69,9 @@ public class ActorJugador extends Entity {
         body.setFixedRotation(true);// esto evita que los cuerpos giren
         initializeAnimations();
         createShape(body);
+        TextureRegion region = new TextureRegion();
+        region.setTexture(imagen);
+        region.setRegion(10,10,30,30);
     }
     public void createShape(Body body){
         // por si el body no a sido inicializado
@@ -79,9 +82,8 @@ public class ActorJugador extends Entity {
 
 
         CircleShape circulo = new CircleShape();
-        //circulo.setRadius((getWidth() / METRICSCENEBOX2D)/2);
-        circulo.setRadius(getHeightBox2D());
-        //circulo.setPosition(new Vector2(0,0));
+        circulo.setRadius(getHeightBox2D()-0.05f);
+        circulo.setPosition(new Vector2(0,0));
 
 
 
@@ -96,10 +98,10 @@ public class ActorJugador extends Entity {
         FixtureDef def = new FixtureDef();
         def.shape = shape;
         def.density = 0;
-        def.friction= 3f;
+        def.friction= 0f;
 
         fixture = body.createFixture(def);
-        body.createFixture(circulo,0);
+        body.createFixture(circulo,0).setUserData(new ConfigGame.DataPLayer(getWidthBox2D(),getHeightBox2D(),DATAPLAYER));
         fixture.setUserData(new ConfigGame.DataPLayer(getWidthBox2D(),getHeightBox2D(),DATAPLAYER));
         shape.dispose();
     }
@@ -166,6 +168,8 @@ public class ActorJugador extends Entity {
         TextureRegion[] temporal;
         int cont;
         regionPlayer = TextureRegion.split(imagen,imagen.getWidth() / FRAME_COLS_PLAYER, imagen.getHeight() / FRAME_ROWS_PLAYER);
+
+
 
         temporal = new TextureRegion[FRAME_COLS_PLAYER - 3];
         cont = 1;

@@ -34,7 +34,15 @@ public class BlockBase extends Sprite {
         this.width = width;
         this.height = height;
     }
+    public BlockBase( World world,float x,float y,float width, float height){
 
+        this.world = world;
+        movil = false;
+        this.x= x;
+        this.y= y;
+        this.width = width;
+        this.height = height;
+    }
     public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;

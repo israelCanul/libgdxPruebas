@@ -86,6 +86,7 @@ public class Entity extends Actor {
         BodyDef def = new BodyDef();
         def.position.set((getX()/ METRICSCENEBOX2D)+(getWidth() / METRICSCENEBOX2D)/2,(getY()/ METRICSCENEBOX2D) + (getHeight() / METRICSCENEBOX2D)/2);
         def.type = type;
+        System.out.println(def.position.x+" "+def.position.y);
         return def;
     }
 
