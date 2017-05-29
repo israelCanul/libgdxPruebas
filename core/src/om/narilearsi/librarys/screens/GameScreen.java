@@ -36,6 +36,7 @@ import om.narilearsi.librarys.maps.ExampleMap;
 import static om.narilearsi.librarys.ConfigGame.BLOQUE;
 import static om.narilearsi.librarys.ConfigGame.HEIGHTSCREEN;
 import static om.narilearsi.librarys.ConfigGame.INITSPEED;
+import static om.narilearsi.librarys.ConfigGame.JUMP;
 import static om.narilearsi.librarys.ConfigGame.METRICSCENEBOX2D;
 import static om.narilearsi.librarys.ConfigGame.WALK;
 import static om.narilearsi.librarys.ConfigGame.WIDTHSCREEN;
@@ -99,7 +100,7 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void show() {
-        player =new ActorJugador(textureJugador,world,32,128);
+        player =new ActorJugador(textureJugador,world,128,128);
         batch = new SpriteBatch();
         //suelo.add(new GroundBase(terrains,world,0,0,700,16));
         //suelo.add(new GroundBase(terrains,world,300,60,80,16,BLOQUE));
@@ -138,7 +139,9 @@ public class GameScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        float speed = INITSPEED * delta * METRICSCENEBOX2D;
+
+        float vel = player.body.getLinearVelocity().x;
+        float speed = vel * delta * METRICSCENEBOX2D;
         stage.act();
         world.step(1 / 60f, 6, 2);
 
@@ -146,17 +149,17 @@ public class GameScreen extends BaseScreen {
         camera.update();
 
 
-        if (player.state==WALK && player.direction[1]==1 && player.isAlive) {
+        //if (player.getForcesApply(1,2)==1  && player.direction[1]==1 && player.isAlive) {
 
             //System.out.println(speed);
             stage.getCamera().translate(speed, 0, 0);
-            camera.translate(INITSPEED * delta, 0);
-        }else if(player.state==WALK && player.direction[0]==1 && player.isAlive){
+            camera.translate(vel * delta, 0);
+        //}else if(player.getForcesApply(1,0)==1 && player.direction[0]==1 && player.isAlive){
 
             //System.out.println(speed);
-            stage.getCamera().translate(-(speed), 0, 0);
-            camera.translate(-(INITSPEED * delta), 0);
-        }
+           // stage.getCamera().translate(-(speed), 0, 0);
+            //camera.translate(-(INITSPEED * delta), 0);
+        //}
 
 
 
