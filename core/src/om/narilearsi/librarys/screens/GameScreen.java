@@ -165,14 +165,14 @@ public class GameScreen extends BaseScreen {
 
         renderer.setView(camera);
         renderer.getBatch().begin();
-        renderer.renderTileLayer(mapa.fondo_atr_1_layer);
-        renderer.renderTileLayer(mapa.fondolayer);
+        renderer.renderTileLayer(mapa.f_2);
+        renderer.renderTileLayer(mapa.f_1);
+        renderer.renderTileLayer(mapa.fondo);
         renderer.getBatch().end();
-
         stage.draw();
-
         renderer.getBatch().begin();
-        renderer.renderTileLayer(mapa.fondo_ade_1_layer);
+        renderer.renderTileLayer(mapa.d_1);
+        renderer.renderTileLayer(mapa.d_2);
         renderer.getBatch().end();
 
 

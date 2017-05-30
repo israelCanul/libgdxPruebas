@@ -25,11 +25,17 @@ import om.narilearsi.librarys.screens.GameScreen;
 public class ExampleMap {
 
     public final TiledMap map;
-   public final TiledMapTileLayer fondolayer;
+
     public final TiledMapTileLayer objetoslayer;
-    public final TiledMapTileLayer fondo_atr_1_layer;
-    public final TiledMapTileLayer fondo_ade_1_layer;
+    public final TiledMapTileLayer d_1;
+    public final TiledMapTileLayer d_2;
+    public final TiledMapTileLayer fondo;
+    public final TiledMapTileLayer f_1;
+    public final TiledMapTileLayer f_2;
     public ArrayList<BlockTiledMap> listaBlockes;
+
+
+
 
     public GameScreen mainGameScreen;
     private MapObjects objects;
@@ -39,9 +45,12 @@ public class ExampleMap {
     public ExampleMap(GameScreen mainGameScreen){
         this.mainGameScreen=mainGameScreen;
         map = new TmxMapLoader().load("mimundo.tmx");
-        fondo_atr_1_layer= (TiledMapTileLayer)map.getLayers().get("fondo_atras_1");
-        fondolayer= (TiledMapTileLayer)map.getLayers().get("fondo");
-        fondo_ade_1_layer = (TiledMapTileLayer)map.getLayers().get("fondo_adelante_1");
+        d_1 = (TiledMapTileLayer)map.getLayers().get("d_1");
+        d_2 = (TiledMapTileLayer)map.getLayers().get("d_2");
+        fondo= (TiledMapTileLayer)map.getLayers().get("fondo");
+        f_1 = (TiledMapTileLayer)map.getLayers().get("f_1");
+        f_2 = (TiledMapTileLayer)map.getLayers().get("f_2");
+
         objetoslayer = (TiledMapTileLayer)map.getLayers().get("objetos");
 
         objects = map.getLayers().get("colicion").getObjects();
